@@ -5,7 +5,9 @@ const ObjectID = require('mongodb').ObjectID
 module.exports = {
   signUp: ({ userEmail, userPassword, userFirstName, userLastName, userBirthday, userAccountType }, callback) => {
     User.getUser({ email: userEmail }, { _id: 1 }, (err, user) => {
-      if(!user) {
+      try {
+        if (err) throw err;
+        if (user) throw { status: 400, msg: "Email already in system" };
         const userSalt = security.generateSalt();
         const encryptedUserPassword = security.sha512(userPassword, userSalt);
         User.createUser({
@@ -17,7 +19,9 @@ module.exports = {
           birthday: userBirthday,
           accountType: userAccountType
         }, callback);
-      } else callback({ status: 400, msg: "Email already in system" })
+      } catch (err) {
+        callback(err)
+      }
     });
   },
   logIn: ({ userEmail, userPassword }, callback) => {

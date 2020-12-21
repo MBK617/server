@@ -15,7 +15,7 @@ module.exports = {
   },
   validateDate: (date) => {
     let d = new Date(date)
-    if(!isNaN(d.getTime())) return d.getUTCDate();
+    if(!isNaN(d.getTime())) return d.toISOString();
     else throw { status: 400, msg:"Not a valid date"};
   },
   validateAccountType: (type) => {
