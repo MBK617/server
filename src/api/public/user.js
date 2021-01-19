@@ -9,12 +9,12 @@ app.post('/create_account' , (req, res) => {
   try {
     UserService.signUp({ userEmail: validateEmail(userEmail), userPassword: validatePassword(userPassword), userFirstName: validateName(userFirstName), userLastName: validateName(userLastName), userBirthday: validateDate(userBirthday), userAccountType: validateAccountType(userAccountType) }, (err) => {
       if(err) {
-        return res.status(err.status).send(err.msg) 
+        return res.status(err.status).send({ error: err.msg }) 
       }
       return res.sendStatus(201) 
     })
   } catch (err) {
-    return res.status(err.status).send(err.msg);
+    return res.status(err.status).send({ error: err.msg });
   }
 });
 
@@ -23,12 +23,12 @@ app.post('/login' , (req, res) => {
   try {
     UserService.logIn({ userEmail: validateEmail(userEmail), userPassword: validatePassword(userPassword) }, (err, token) => {
       if(err) {
-        return res.status(err.status).send(err.msg) 
+        return res.status(err.status).send({ error: err.msg }) 
       }
       return res.status(200).send({token})
     });
   } catch (err) {
-    return res.status(err.status).send(err.msg) 
+    return res.status(err.status).send({ error: err.msg }) 
   }
 });
 

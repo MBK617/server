@@ -15,7 +15,7 @@ app.post('/change_password' , (req, res) => {
       return res.sendStatus(204);
     })
   } catch(err) {
-    return res.status(err.status).send(err.msg)
+    return res.status(err.status).send({ error: err.msg })
   }
   
 });
