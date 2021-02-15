@@ -6,6 +6,7 @@ const cors = require('cors');
 
 var app = express();
 app.use(bodyparser.json());
+app.use(cors());
 
 const port = process.env.PORT || 8080;
 app.listen(port, () => console.log(`Listening on port ${port}..`));
@@ -13,5 +14,5 @@ app.listen(port, () => console.log(`Listening on port ${port}..`));
 const publicAPI = require('./api/public')
 const authAPI = require('./api/auth')
 
-app.use('/api/public', cors(), publicAPI);
-app.use('/api/auth', authCheck, authAPI); //TODO: add cors to auth server
+app.use('/api/public', publicAPI);
+app.use('/api/auth', authCheck, authAPI);
