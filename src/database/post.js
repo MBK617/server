@@ -1,38 +1,47 @@
 const MongoClient = require('mongodb').MongoClient;
 const CONN_STR = `mongodb://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_HOST}:${process.env.DB_PORT}?authSource=admin`;
 const CONN_ERR = { status: 500, msg: "Failed to connect to database" }
+const COLLECTION = "posts"
 
 module.exports = {
-  createUser: (user, callback) => {
+  createPost: (post, callback) => {
     MongoClient.connect(CONN_STR, { useUnifiedTopology: true },  function(conn_err, client) {
       if (conn_err) return callback(CONN_ERR);
-      const users = client.db(process.env.DATABASE).collection("users");
-      users.insertOne(user, (err) => {
+      const posts = client.db(process.env.DATABASE).collection(COLLECTION);
+      posts.insertOne(post, (err) => {
         client.close();
         callback(err && { status: 500, msg: err.message });
       });
-      
     });
   },
-  getUser: (query, fieldsRequested, callback) => {
+  getPosts: (query, fieldsRequested, callback) => {
     MongoClient.connect(CONN_STR, { useUnifiedTopology: true },  function(conn_err, client) {
       if (conn_err) return callback(CONN_ERR);
-      const users = client.db(process.env.DATABASE).collection("users");
-      users.findOne(query, { projection: fieldsRequested }, (err, res) => {
+      const posts = client.db(process.env.DATABASE).collection(COLLECTION);
+      posts.find(query, { projection: fieldsRequested }).limit(25).toArray((err, res) => {
         client.close();
         callback(err && { status: 500, msg: err.message }, res);
       });
     });
   },
-  updateUser: (query, user, callback) => {
+  updatePost: (query, user, callback) => {
     MongoClient.connect(CONN_STR, { useUnifiedTopology: true },  function(conn_err, client) {
       if (conn_err) return callback(CONN_ERR);
-      const users = client.db(process.env.DATABASE).collection("users");
-      users.updateOne(query, { $set: user }, (err, res) => {
+      const posts = client.db(process.env.DATABASE).collection(COLLECTION);
+      posts.updateOne(query, { $set: user }, (err, res) => {
         client.close();
         callback(err && { status: 500, msg: err.message });
       });
     });
-    
-  }
+  },
+  deletePost: (query, callback) => {
+    MongoClient.connect(CONN_STR, { useUnifiedTopology: true },  function(conn_err, client) {
+      if (conn_err) return callback(CONN_ERR);
+      const posts = client.db(process.env.DATABASE).collection(COLLECTION);
+      posts.deleteOne(query, (err, res) => {
+        client.close();
+        callback(err && { status: 500, msg: err.message });
+      });
+    });
+  }   
 }
