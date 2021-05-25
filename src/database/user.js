@@ -30,6 +30,9 @@ module.exports = {
       const users = client.db(process.env.DATABASE).collection("users");
       users.updateOne(query, { $set: user }, (err, res) => {
         client.close();
+        if (!res.matchedCount) {
+          return callback({ status: 404, msg: "User not found" });
+        }
         callback(err && { status: 500, msg: err.message });
       });
     });
