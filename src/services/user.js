@@ -41,5 +41,16 @@ module.exports = {
     const userSalt = security.generateSalt();
     const encryptedNewUserPassword = security.sha512(userNewPassword, userSalt)
     User.updateUser({ _id: ObjectID(userId) }, { password: encryptedNewUserPassword, salt: userSalt }, callback);
-  }
+  },
+  isAdmin: (userId, callback) => {
+    User.getUser({ _id: ObjectID(userId) }, { accountType: 1 }, (err, user) => {
+      try {
+        if(err) throw err;
+        if(!user) throw { status: 404, msg: "User not found" };
+        callback(undefined, user.accountType === "ADMIN");
+      } catch (err) {
+        callback(err)
+      }
+    })
+  },
 }
