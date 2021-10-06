@@ -9,13 +9,8 @@
 ## Environment Variables
 You will need to create a .env file in the root directory with the following values:
 ```js
-// This is the address your database is hosted at. If you're 
-// hosting a database locally for development, it will be localhost.
-DB_HOST = localhost
-
-// This is the port that your database is hosted on. MongoDB 
-// defaults to use 27017.
-DB_PORT = 27017
+// This is the address your database is hosted at. It expects a mongodb url.
+DB_HOST = *cluster*.mongodb.net
 
 // This is the name of your primary database.
 DATABASE = *database name*
@@ -37,9 +32,7 @@ PORT = 8181
 ```
 
 ## Getting Started
-* Ensure that your database is accessible from the specified host and port in your .env file. This may mean starting up a local mongo session, or tunneling into the development server with the database port fowarded to your local machine.
-  * If tunnelling into a remote database, you can use `ssh -L 27017:localhost:27017 {SYSTEM_USERNAME}@{DATABASE_MACHINE_ADDRESS}` in a Unix based terminal.
-  * You can use PuTTY to accomplish the same thing by setting up your SSH connection to the machine, then navigating to Connection -> SSH -> Tunnels and adding a local tunnel from port 27017 (or a custom port) to localhost:27017.
+* Ensure that your database is accessible from the specified host in your .env file. Create your own mongo cluster or contact Abby for the official dev connection info.
 * If you are starting the server for the first time or have pulled new changes since running it last, install any new dependencies. 
   * Run `npm install` in the root directory of this repository.
 * Run `npm start` in the root directory of this repository.

@@ -1,5 +1,5 @@
 const MongoClient = require('mongodb').MongoClient;
-const CONN_STR = `mongodb://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_HOST}:${process.env.DB_PORT}?authSource=admin`;
+const CONN_STR = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_HOST}`;
 const CONN_ERR = { status: 500, msg: "Failed to connect to database" }
 
 module.exports = {
