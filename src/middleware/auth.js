@@ -6,6 +6,6 @@ module.exports = (req, res, next) => {
     req.userId = security.authenticate(token)
     next();
   } catch (err) {
-   res.status(err.status).json(err.msg)
+    res.status(err.status).json(err.msg)
   }
 }

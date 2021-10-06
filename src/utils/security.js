@@ -25,7 +25,7 @@ module.exports = {
       return decoded.id;
     }
     catch (err) {
-      throw {status: 401, msg: 'Failed to authenticate token.'}
+      throw { status: 401, msg: 'Failed to authenticate token.' }
     }
   }
 };

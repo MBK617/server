@@ -1,4 +1,5 @@
 # MBK617 - server
+<a href="https://codeclimate.com/github/MBK617/server/maintainability"><img src="https://api.codeclimate.com/v1/badges/4ab70749ba56f0c6bb9a/maintainability" /></a>
 ## Requirements for Development
 * Node.js LTS release or greater
 
